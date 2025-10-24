@@ -222,7 +222,7 @@ export default function Profile() {
           </div>
 
           {/* Form Section */}
-          <div className="px-6 sm:px-8 -mt-10">
+          <div className="px-4 sm:px-8 -mt-10">
             <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 space-y-6">
               {/* Student Information */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
