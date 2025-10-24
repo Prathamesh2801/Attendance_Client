@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function Attendance({ attendance, selectedBatch, formatDate, onClose, loading = false }) {
   if (!selectedBatch) return null;
-
+  console.log("Selected Batch : ",selectedBatch)
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -17,51 +17,82 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 rounded-xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden border border-blue-600/30 shadow-2xl mx-2"
       >
-        {/* Header - Same as before */}
-        <div className="bg-blue-800/50 p-4 sm:p-6 border-b border-blue-600/30">
-          <div className="flex justify-between items-start">
-            <div className="flex-1 mr-2">
-              <motion.h2
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 break-words"
-              >
-                {selectedBatch.faculty || selectedBatch.facultyid || "Faculty Not Available"}
-              </motion.h2>
-              
-              <motion.h3
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className="text-sm sm:text-lg md:text-xl font-semibold text-blue-300 mb-2 break-words"
-              >
-                {formatDate(selectedBatch.startdate || selectedBatch.date)} - {formatDate(selectedBatch.ExceptedEnddate || selectedBatch.endate)}
-              </motion.h3>
+        {/* Enhanced Header */}
+        <div className="relative bg-gradient-to-r from-blue-800/60 via-blue-700/50 to-blue-800/60 p-4 sm:p-6 border-b border-blue-500/40 overflow-hidden">
+          {/* Animated Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-transparent"></div>
+          </div>
 
+          <div className="relative flex justify-between items-start gap-4">
+            <div className="flex-1 space-y-4">
+              {/* Subject Name - Primary Focus */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mt-3"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-blue-900/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg border border-blue-500/30 shadow-lg"
               >
-                <div className="bg-blue-700/30 p-2 sm:p-3 rounded-lg border border-blue-600/30">
-                  <p className="text-blue-200 text-xs sm:text-sm font-semibold">Subject</p>
-                  <p className="text-white text-sm sm:text-base break-words">{selectedBatch.subject || "N/A"}</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-1.5 h-6 bg-blue-400 rounded-full"></div>
+                  <p className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">Subject</p>
                 </div>
-                <div className="bg-blue-700/30 p-2 sm:p-3 rounded-lg border border-blue-600/30">
-                  <p className="text-blue-200 text-xs sm:text-sm font-semibold">Batch Name</p>
-                  <p className="text-white text-sm sm:text-base break-words">{selectedBatch.batchno || selectedBatch.batchname || "N/A"}</p>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white break-words pl-3.5">
+                  {selectedBatch.subject || "N/A"}
+                </h2>
+              </motion.div>
+
+              {/* Faculty and Dates Grid */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3"
+              >
+                {/* Faculty Name */}
+                <div className="bg-blue-900/30 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <div className="w-1 h-4 bg-emerald-400 rounded-full"></div>
+                    <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">Faculty</p>
+                  </div>
+                  <p className="text-white text-sm sm:text-base font-medium break-words">
+                    {selectedBatch.faculty_display_name || selectedBatch.faculty || selectedBatch.facultyid || "N/A"}
+                  </p>
+                </div>
+
+                {/* Start Date */}
+                <div className="bg-blue-900/30 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <div className="w-1 h-4 bg-cyan-400 rounded-full"></div>
+                    <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">Start Date</p>
+                  </div>
+                  <p className="text-white text-sm sm:text-base font-medium">
+                    {formatDate(selectedBatch.startdate || selectedBatch.date) || "N/A"}
+                  </p>
+                </div>
+
+                {/* Expected End Date */}
+                <div className="bg-blue-900/30 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <div className="w-1 h-4 bg-purple-400 rounded-full"></div>
+                    <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">(Exp) End Date</p>
+                  </div>
+                  <p className="text-white text-sm sm:text-base font-medium">
+                    {formatDate(selectedBatch.ExceptedEnddate || selectedBatch.endate) || "N/A"}
+                  </p>
                 </div>
               </motion.div>
             </div>
-            
+
+            {/* Close Button */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
-              className="text-gray-300 hover:text-white text-xl sm:text-2xl font-bold transition duration-200 flex-shrink-0"
+              className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-red-500/20 hover:bg-red-500/30 border border-red-400/30 text-red-300 hover:text-red-200 transition-all duration-200"
               onClick={onClose}
             >
-              ✖
+              <span className="text-lg sm:text-xl font-bold">✖</span>
             </motion.button>
           </div>
         </div>
@@ -85,7 +116,7 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
             </motion.div>
           ) : attendance.length ? (
             <>
-              {/* Desktop Table - Same as before */}
+              {/* Desktop Table */}
               <div className="hidden sm:block overflow-x-auto rounded-lg border border-blue-600/30">
                 <table className="min-w-full bg-blue-900/20 backdrop-blur-sm">
                   <thead className="bg-blue-800/50">
@@ -137,7 +168,7 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
                 </table>
               </div>
 
-              {/* Mobile Cards - Same as before */}
+              {/* Mobile Cards */}
               <div className="sm:hidden space-y-3">
                 {attendance.map((att, idx) => (
                   <motion.div
@@ -209,10 +240,6 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
                   <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
                   No Batch
                 </span>
-                {/* <span className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  Other
-                </span> */}
               </div>
             </div>
           </div>

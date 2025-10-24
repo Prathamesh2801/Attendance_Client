@@ -3,6 +3,17 @@ import { useLocation } from "react-router-dom";
 import { BASE_URL } from "../../config";
 import { motion } from "framer-motion";
 
+
+// I m posting the changes required :
+
+// 1. View attendance :
+// 2. 
+// Subject name : XXXX
+// Faculty name : xxxxxxxx
+// Start date : 
+// (Exp) End Date :
+
+// Attendance details
 export default function Course() {
   const location = useLocation();
   const user = location.state?.user;
