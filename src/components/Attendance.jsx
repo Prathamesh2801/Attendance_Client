@@ -47,6 +47,77 @@ export default function Attendance({
 
             <div className="relative flex justify-between items-start gap-4">
               <div className="flex-1 space-y-4">
+                {/* Subject Info */}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-blue-900/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg border border-blue-500/30 shadow-lg"
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1.5 h-6 bg-blue-400 rounded-full"></div>
+                    <p className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                      Subject
+                    </p>
+                  </div>
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white break-words pl-3.5">
+                    {selectedBatch.subject || "N/A"}
+                  </h2>
+                </motion.div>
+
+                {/* Faculty & Dates */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3"
+                >
+                  {[
+                    {
+                      label: "Faculty",
+                      value:
+                        selectedBatch.faculty_display_name ||
+                        selectedBatch.faculty ||
+                        selectedBatch.facultyid ||
+                        "N/A",
+                      color: "emerald",
+                    },
+                    {
+                      label: "Start Date",
+                      value:
+                        formatDate(
+                          selectedBatch.startdate || selectedBatch.date
+                        ) || "N/A",
+                      color: "cyan",
+                    },
+                    {
+                      label: "(Exp) End Date",
+                      value:
+                        formatDate(
+                          selectedBatch.ExceptedEnddate || selectedBatch.endate
+                        ) || "N/A",
+                      color: "purple",
+                    },
+                  ].map((info, i) => (
+                    <div
+                      key={i}
+                      className="bg-blue-900/30 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300"
+                    >
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <div
+                          className={`w-1 h-4 bg-${info.color}-400 rounded-full`}
+                        ></div>
+                        <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">
+                          {info.label}
+                        </p>
+                      </div>
+                      <p className="text-white text-sm sm:text-base font-medium break-words">
+                        {info.value}
+                      </p>
+                    </div>
+                  ))}
+                </motion.div>
+
                 {/* Statistics Cards */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -86,76 +157,6 @@ export default function Attendance({
                       </p>
                       <p className="text-2xl sm:text-3xl font-bold text-white">
                         {stat.value}
-                      </p>
-                    </div>
-                  ))}
-                </motion.div>
-
-                {/* Subject Info */}
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="bg-blue-900/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg border border-blue-500/30 shadow-lg"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1.5 h-6 bg-blue-400 rounded-full"></div>
-                    <p className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
-                      Subject
-                    </p>
-                  </div>
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white break-words pl-3.5">
-                    {selectedBatch.subject || "N/A"}
-                  </h2>
-                </motion.div>
-
-                {/* Faculty & Dates */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3"
-                >
-                  {[
-                    {
-                      label: "Faculty",
-                      value:
-                        selectedBatch.faculty_display_name ||
-                        selectedBatch.faculty ||
-                        selectedBatch.facultyid ||
-                        "N/A",
-                      color: "emerald",
-                    },
-                    {
-                      label: "Start Date",
-                      value:
-                        formatDate(selectedBatch.startdate || selectedBatch.date) ||
-                        "N/A",
-                      color: "cyan",
-                    },
-                    {
-                      label: "(Exp) End Date",
-                      value:
-                        formatDate(
-                          selectedBatch.ExceptedEnddate || selectedBatch.endate
-                        ) || "N/A",
-                      color: "purple",
-                    },
-                  ].map((info, i) => (
-                    <div
-                      key={i}
-                      className="bg-blue-900/30 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-1.5 mb-1.5">
-                        <div
-                          className={`w-1 h-4 bg-${info.color}-400 rounded-full`}
-                        ></div>
-                        <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider">
-                          {info.label}
-                        </p>
-                      </div>
-                      <p className="text-white text-sm sm:text-base font-medium break-words">
-                        {info.value}
                       </p>
                     </div>
                   ))}
