@@ -65,7 +65,7 @@ export default function Attendance({
                   </h2>
                 </motion.div>
 
-                {/* Faculty & Dates */}
+                {/* Faculty & Dates  formatted */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
