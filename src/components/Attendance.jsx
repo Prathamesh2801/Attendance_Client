@@ -47,18 +47,50 @@ export default function Attendance({
 
             <div className="relative flex justify-between items-start gap-4">
               <div className="flex-1 space-y-4">
-                {/* Subject Info */}
+                {/* Subject Info with Status Badge */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                   className="bg-blue-900/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg border border-blue-500/30 shadow-lg"
                 >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1.5 h-6 bg-blue-400 rounded-full"></div>
-                    <p className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
-                      Subject
-                    </p>
+                  <div className="flex items-center justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-6 bg-blue-400 rounded-full"></div>
+                      <p className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                        Subject
+                      </p>
+                    </div>
+                    {selectedBatch.status && (
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2, type: "spring" }}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border-2 shadow-lg ${
+                          selectedBatch.status.toLowerCase() === "pursuing" ||
+                          selectedBatch.status.toLowerCase() === "persuing"
+                            ? "bg-gradient-to-r from-emerald-500/30 to-green-500/30 text-emerald-200 border-emerald-400/60 shadow-emerald-500/20"
+                            : selectedBatch.status.toLowerCase() === "completed"
+                            ? "bg-gradient-to-r from-blue-500/30 to-cyan-500/30 text-blue-200 border-blue-400/60 shadow-blue-500/20"
+                            : "bg-gradient-to-r from-gray-500/30 to-slate-500/30 text-gray-200 border-gray-400/60 shadow-gray-500/20"
+                        }`}
+                      >
+                        {(selectedBatch.status.toLowerCase() === "pursuing" ||
+                          selectedBatch.status.toLowerCase() === "persuing") && (
+                          <motion.div
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="w-2 h-2 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"
+                          ></motion.div>
+                        )}
+                        {selectedBatch.status.toLowerCase() === "completed" && (
+                          <svg className="w-3 h-3 text-blue-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                        <span className="text-[10px] sm:text-xs">{selectedBatch.status}</span>
+                      </motion.div>
+                    )}
                   </div>
                   <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white break-words pl-3.5">
                     {selectedBatch.subject || "N/A"}
@@ -347,4 +379,4 @@ export default function Attendance({
       </motion.div>
     </motion.div>
   );
-}
+} 

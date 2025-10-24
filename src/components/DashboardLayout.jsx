@@ -19,13 +19,7 @@ export default function DashboardLayout() {
     navigate("/login");
   }
 
-  const handleProfile = () => {
-    navigate("/profile", { state: { user } });
-  }
 
-  const handleBack = () => {
-    navigate(-1);
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
@@ -93,7 +87,7 @@ export default function DashboardLayout() {
       </motion.header>
 
       {/* Main Content */}
-      <main className="flex-grow p-6 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
+      <main className="flex-grow  bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
         <Outlet />
       </main>
 
