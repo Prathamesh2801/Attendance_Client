@@ -26,10 +26,13 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
 
           <div className="relative flex justify-between items-start gap-4">
             <div className="flex-1 space-y-4">
+             
+
               {/* Subject Name - Primary Focus */}
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
                 className="bg-blue-900/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg border border-blue-500/30 shadow-lg"
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -45,7 +48,7 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+                transition={{ delay: 0.2 }}
                 className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3"
               >
                 {/* Faculty Name */}
@@ -78,6 +81,46 @@ export default function Attendance({ attendance, selectedBatch, formatDate, onCl
                   </div>
                   <p className="text-white text-sm sm:text-base font-medium">
                     {formatDate(selectedBatch.ExceptedEnddate || selectedBatch.endate) || "N/A"}
+                  </p>
+                </div>
+              </motion.div>
+
+
+               {/* Stats Section */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+              >
+                {/* Total Sessions */}
+                <div className="bg-gradient-to-br from-blue-600/30 to-blue-700/20 backdrop-blur-sm p-3 rounded-lg border border-blue-400/30 hover:border-blue-300/50 transition-all duration-300 shadow-lg">
+                  <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider mb-1">Sessions</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">
+                    {attendance.length}
+                  </p>
+                </div>
+
+                {/* Present Count */}
+                <div className="bg-gradient-to-br from-green-600/30 to-green-700/20 backdrop-blur-sm p-3 rounded-lg border border-green-400/30 hover:border-green-300/50 transition-all duration-300 shadow-lg">
+                  <p className="text-green-200 text-xs font-semibold uppercase tracking-wider mb-1">Present</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">
+                    {attendance.filter(att => att.attendence?.toLowerCase() === "present").length}
+                  </p>
+                </div>
+
+                {/* Absent Count */}
+                <div className="bg-gradient-to-br from-red-600/30 to-red-700/20 backdrop-blur-sm p-3 rounded-lg border border-red-400/30 hover:border-red-300/50 transition-all duration-300 shadow-lg">
+                  <p className="text-red-200 text-xs font-semibold uppercase tracking-wider mb-1">Absent</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">
+                    {attendance.filter(att => att.attendence?.toLowerCase() === "absent").length}
+                  </p>
+                </div>
+
+                {/* No Batch Count */}
+                <div className="bg-gradient-to-br from-gray-600/30 to-gray-700/20 backdrop-blur-sm p-3 rounded-lg border border-gray-400/30 hover:border-gray-300/50 transition-all duration-300 shadow-lg">
+                  <p className="text-gray-200 text-xs font-semibold uppercase tracking-wider mb-1">No Batch</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">
+                    {attendance.filter(att => att.attendence?.toLowerCase() === "no batch today").length}
                   </p>
                 </div>
               </motion.div>
